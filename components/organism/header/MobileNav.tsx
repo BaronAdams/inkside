@@ -1,6 +1,7 @@
 import { headerData } from '@/lib/data/headerData'
 import Link from 'next/link'
-import React from 'react'
+import { usePathname } from 'next/navigation'
+import React, { useEffect, useState } from 'react'
 
 /**
  * Our MobileNav is a reusable UI component that used to represent navbar section of any website in mobile version.
@@ -16,8 +17,20 @@ interface SidebarLayoutProps {
 }
 
 const MobileNav = ({ sidebarOpen, setSidebarOpen }: SidebarLayoutProps) => {
+   const pathname = usePathname()
+   const [canDisplay, setCanDisplay] = useState<boolean>(false)
+
+   useEffect(() => {
+     if(pathname.startsWith('/connexion') || pathname.startsWith('/inscription')){
+      let mobileHeader = document.getElementById('mobile-header')
+      if(mobileHeader) mobileHeader.remove();
+     }else{
+      setCanDisplay(true)
+     }
+   }, [])
+
    return (
-      <nav>
+      <nav id='mobile-header' className={!canDisplay ? 'hidden' : 'block' }>
          <div className="block xl:hidden">
             <div
                className={`overflow-y-auto z-40 flex pt-5 top-0 flex-col h-screen w-full max-w-[300px] fixed bg-base-200  duration-500 ease-in  gap-2 md:gap-0 shadow-xl ${

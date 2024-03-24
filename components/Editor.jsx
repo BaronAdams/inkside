@@ -1,11 +1,11 @@
-"use client"
-
 import hljs from 'highlight.js'
-import 'react-quill/dist/quill.snow.css'
 import 'highlight.js/styles/atom-one-dark.min.css'
-import ReactQuill from 'react-quill'
+import ReactQuill, { Quill } from "react-quill";
+import ImageResize from "quill-image-resize-module-react";
+import "react-quill/dist/quill.snow.css";
+import quillEmoji from "react-quill-emoji";
+import "react-quill-emoji/dist/quill-emoji.css";
 import parse, { HTMLReactParserOptions, Element, domToReact, attributesToProps } from 'html-react-parser'
-import { Button } from 'react-daisyui'
 import { useEffect, useState } from 'react'
 
 hljs.configure({
@@ -14,7 +14,7 @@ hljs.configure({
 
 const modules = {
   syntax: {
-    highlight: (text : string) => hljs.highlightAuto(text).value,
+    highlight: (text) => hljs.highlightAuto(text).value,
   },
   toolbar: [
     [{ header: [1, 2, 3, false] }],
@@ -27,7 +27,15 @@ const modules = {
     [{ color: [] }],
     ['code-block'],
     ['clean'],
+    ["emoji"]
   ],
+  "emoji-toolbar": true,
+  "emoji-textarea": true,
+  "emoji-shortname": true,
+  clipboard: {
+    // toggle to add extra line breaks when pasting HTML:
+    matchVisual: false
+  }
 }
 
 const formats = [
@@ -46,28 +54,44 @@ const formats = [
     'align',
     'color',
     'code-block',
+    'emoji'
 ]
 
-function Page() {
-    const [value, setValue] = useState<string>('') 
-    const [template, setTemplate] = useState<any>('') 
+Quill.register("modules/imageResize", ImageResize);
+  Quill.register(
+    {
+      "formats/emoji": quillEmoji.EmojiBlot,
+      "modules/emoji-toolbar": quillEmoji.ToolbarEmoji,
+      "modules/emoji-textarea": quillEmoji.TextAreaEmoji,
+      "modules/emoji-shortname": quillEmoji.ShortNameEmoji
+    },
+    true
+  );
+
+function Editor() {
+    const [value, setValue] = useState('') 
+    const [template, setTemplate] = useState('') 
+
+    // useEffect(() => {
+    //   console.log(value)
+    // }, [value])
 
     useEffect(() => {
-      console.log(value)
-    }, [value])
-
-    useEffect(() => {
-      // console.log(template)
-      const templateElt = document.querySelector('.template pre code')
+      hljs.configure({
+        languages: ['javascript', 'ruby', 'python', 'rust','php','dart','typescript','jsx','tsx']
+      })
       //@ts-ignore
-      if(templateElt) hljs.highlightElement(templateElt)
+      if(document.querySelector('.template pre code')) {
+        console.log(document.querySelector('.template pre code'))
+        hljs.highlightElement(document.querySelector('.template pre code'))
+      }
       const detectedLang = document.querySelector('.template pre code')?.className.split(' ')[1]
       console.log(detectedLang)
     }, [template])
 
-    const options : HTMLReactParserOptions = {
+    const options = {
       replace(domNode){
-        const typedDomNode = domNode as Element
+        const typedDomNode = domNode
         if(typedDomNode.name ==="pre" && typedDomNode.attribs.class === "ql-syntax" && typedDomNode.attribs.spellcheck === "false"){
           return (
             <>
@@ -79,35 +103,27 @@ function Page() {
       }
     }
 
-    const handleEditorChange = (text:string)=>{
+    const handleEditorChange = (text)=>{
       setValue(text)
-      setTemplate(parse(value,options))
+      setTemplate(parse(text,options))
   }
 
     return (
-        <div className="w-screen flex flex-col items-center justify-center">
+        <>
             <ReactQuill
                 value={value}
                 onChange={handleEditorChange}
                 theme="snow"
                 modules={modules}
                 formats={formats}
-                className='w-[50vw] '
+                className='w-[50vw] max-[800px]:w-[75vw] max-[572px]:w-[85vw] '
             />
             {/* <Button >Send Code</Button> */}
             <div className="template rounded-2xl bg-[#2B3440]">
-            {template}
+              {template}
             </div>
-        </div>
+        </>
       )
 }
 
-export default Page
-
-
-
-
-
-
-
-
+export default Editor

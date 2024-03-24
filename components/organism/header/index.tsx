@@ -1,9 +1,14 @@
 'use client'
-import React from 'react'
+
+import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { headerData } from '@/lib/data/headerData'
-import useMode from '@/lib/utils/themeMode'
+// import useMode from '@/lib/utils/themeMode'
 import MobileNav from './MobileNav'
+import UserStatusComponent from '../userprofile'
+import { Session } from 'next-auth'
+import { Dropdown } from 'react-daisyui'
+import { logOut } from '@/lib/actions'
 
 /**
  * Our Header is a reusable UI component that used to represent top navbar section of any website.
@@ -12,18 +17,17 @@ import MobileNav from './MobileNav'
  *
  * @returns React component that can be easily integrated into any web application.
  */
-const Header = () => {
-   const { theme, setTheme, themes, hydrationError } = useMode()
+const Header = ( { session } : { session: Session | null } ) => {
+   // const { theme, setTheme, themes, hydrationError } = useMode()
 
-   const [sidebarOpen, setSidebarOpen] = React.useState<boolean>(false)
+   const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
 
    return (
-      <header className="py-5">
+      <header>
          <div className="container mx-auto font-work">
             <div className="navbar grid grid-cols-12">
-               <div className="col-span-3 max-[490px]:col-span-4 max-[400px]:col-span-6">
-                  <Link href={`/`} className=''>
-                     {/* <Logo className={`text-base-content`} /> */}
+               <div className="col-span-2 max-[490px]:col-span-4 max-[400px]:col-span-6">
+                  <Link href={`/`} >
                      <img src="/inkside.svg" alt="Logo" className='object-cover mt-5 scale-[1.2] h-[8vh] w-[170px] ' />
                   </Link>
                </div>
@@ -41,7 +45,7 @@ const Header = () => {
                      ))}
                   </div>
                </nav>
-               <div className="flex items-center justify-end xl:justify-center gap-10 col-span-9 xl:col-span-3 max-[490px]:col-span-8 max-[400px]:col-span-6">
+               <div className="flex items-center justify-end gap-10 col-span-9 xl:col-span-4 max-[490px]:col-span-8 max-[400px]:col-span-6">
                   {/* Search Block */}
                   <div className="bg-base-200 pl-4 pr-3 py-2 rounded-md hidden sm:flex items-center gap-4">
                      <input
@@ -74,83 +78,38 @@ const Header = () => {
                         </svg>
                      </div>
                   </div>
-                  {/* Theme Switcher */}
-                  {/*<input*/}
-                  {/*   type="checkbox"*/}
-                  {/*   className={`toggle rounded-full ${*/}
-                  {/*      !lightMode ? 'toggle-primary' : ''*/}
-                  {/*   }`}*/}
-                  {/*   onClick={() => {*/}
-                  {/*      if (theme === 'light') {*/}
-                  {/*         setTheme('dark')*/}
-                  {/*      } else {*/}
-                  {/*         setTheme('light')*/}
-                  {/*      }*/}
-                  {/*   }}*/}
-                  {/*   defaultChecked={theme === 'dark'}*/}
-                  {/*/>*/}
-
-                  {/*Multi themes switcher */}
-                  <div className="flex-none">
-                     <div className="dropdown dropdown-end">
-                        <label
-                           tabIndex={0}
-                           className="btn btn-ghost btn-circle avatar"
-                        >
-                           <div className="w-7 rounded-full">
-                              <svg
-                                 stroke="currentColor"
-                                 fill="currentColor"
-                                 strokeWidth="0"
-                                 viewBox="0 0 512 512"
-                                 className="w-7 h-7 text-base-content"
-                                 height="1em"
-                                 width="1em"
-                                 xmlns="http://www.w3.org/2000/svg"
-                              >
-                                 <path d="M441 336.2l-.06-.05c-9.93-9.18-22.78-11.34-32.16-12.92l-.69-.12c-9.05-1.49-10.48-2.5-14.58-6.17-2.44-2.17-5.35-5.65-5.35-9.94s2.91-7.77 5.34-9.94l30.28-26.87c25.92-22.91 40.2-53.66 40.2-86.59s-14.25-63.68-40.2-86.6c-35.89-31.59-85-49-138.37-49C223.72 48 162 71.37 116 112.11c-43.87 38.77-68 90.71-68 146.24s24.16 107.47 68 146.23c21.75 19.24 47.49 34.18 76.52 44.42a266.17 266.17 0 0086.87 15h1.81c61 0 119.09-20.57 159.39-56.4 9.7-8.56 15.15-20.83 15.34-34.56.21-14.17-5.37-27.95-14.93-36.84zM112 208a32 32 0 1132 32 32 32 0 01-32-32zm40 135a32 32 0 1132-32 32 32 0 01-32 32zm40-199a32 32 0 1132 32 32 32 0 01-32-32zm64 271a48 48 0 1148-48 48 48 0 01-48 48zm72-239a32 32 0 1132-32 32 32 0 01-32 32z"></path>
-                              </svg>
+                  {/* Theme Switcher #ea5a0c8f*/}
+                  
+                  <div>
+                     {session?.user ? 
+                        (
+                           <div className="dropdown" role='listbox' >
+                              <div className="group hover:cursor-pointer" tabIndex={0}>
+                                 {session?.user?.image ? (<img src={session?.user?.image} className='w-10 h-10 object-cover object-center rounded-full' alt={session?.user?.name + ' image'} />) : (<div className='w-10 h-10 flex justify-center items-center bg-orange-600 text-white font-bold rounded-full duration-300 border-[3.3px] border-[#ea5a0c] group-hover:border-[#ffffff46]'><p className='text-[20px]'>{session?.user?.name?.split(' ')[0][0]}</p></div>)}
+                              </div>
+                              <ul tabIndex={0} className='dropdown-content menu p-2 shadow bg-base-100 rounded-box w-[170px] mt-3 mr-8' role='menu' >
+                                 <li role="menuitem"><Link href={'/profile'}>Mon Profil</Link></li>
+                                 <li role="menuitem"><Link href={'/settings'}>Paramètres</Link></li>
+                                 <li role="menuitem"><Link href={'/write'}>Ecrivez un article</Link></li>
+                                 <li role="menuitem"><button onClick={() => logOut()}>Deconnexion</button></li>
+                              </ul>
                            </div>
-                        </label>
-                        <ul
-                           tabIndex={0}
-                           className="grid dropdown-content p-3 shadow-lg mt-5 bg-base-200 rounded-lg w-52 max-h-80 overflow-x-auto"
-                        >
-                           {/*@ts-ignore */}
-                           {themes.map((item) => (
-                              <li
-                                 data-theme={item}
-                                 key={item}
-                                 className={`capitalize w-full flex mb-2 rounded-md last-of-type:mb-0 justify-between items-center px-2 py-2 hover:bg-base-300 transition-all duration-300 cursor-pointer`}
-                                 onClick={() => {
-                                    setTheme(item)
-                                 }}
-                              >
-                                 <span className="text-base-content flex items-center gap-2">
-                                    {hydrationError && theme === item && (
-                                       <svg
-                                          xmlns="http://www.w3.org/2000/svg"
-                                          width="16"
-                                          height="16"
-                                          viewBox="0 0 24 24"
-                                          fill="currentColor"
-                                          className="w-3 h-3 text-primary"
-                                       >
-                                          <path d="M20.285 2l-11.285 11.567-5.286-5.011-3.714 3.716 9 8.728 15-15.285z"></path>
-                                       </svg>
-                                    )}
-                                    {item}
-                                 </span>
-                                 <div className="flex flex-shrink-0 flex-wrap gap-1 h-full">
-                                    <div className="bg-primary w-2 rounded"></div>{' '}
-                                    <div className="bg-secondary w-2 rounded"></div>{' '}
-                                    <div className="bg-accent w-2 rounded"></div>{' '}
-                                    <div className="bg-neutral w-2 rounded"></div>
-                                 </div>
-                              </li>
-                           ))}
-                        </ul>
-                     </div>
+                        ) 
+
+                        : 
+
+                        (<>
+                           <Link href={'/login'} className="btn btn-primary mr-2">Se Connecter</Link>
+                           <Link href={'/register'} className="btn btn-primary">S'inscrire</Link>
+                        </>) 
+                     }
+                  </div>   
+                  <div>
+                     <label className="swap swap-rotate">
+                        <input type="checkbox" className="theme-controller" value="dark" />
+                        <svg className="swap-on fill-current w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"/></svg>
+                        <svg className="swap-off fill-current w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/></svg>
+                     </label>
                   </div>
 
                   {/* Responsive Sidebar Menu */}

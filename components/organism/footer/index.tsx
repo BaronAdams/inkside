@@ -18,7 +18,7 @@ const Footer = () => {
    const { lightMode } = useMode()
 
    return (
-      <footer className="bg-base-200 px-5 md:px-0 font-sans">
+      <footer id='footer' className={`bg-base-200 px-5 md:px-0 font-sans`}>
          <div className="container mx-auto">
             <div className="grid grid-cols-12 gap-5 py-16">
                <div className="col-span-12 lg:col-span-3">

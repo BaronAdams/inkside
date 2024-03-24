@@ -33,7 +33,7 @@ const config: Config = {
     themes: [
        {
           light: {
-             ...require('daisyui/src/theming/themes')['[data-theme=light]'],
+             ...require('daisyui/src/theming/themes')['light'],
              primary: '#4B6BFB',
              'primary-content': '#FFFFFF',
              'primary-focus': '#405BD5',
@@ -58,7 +58,7 @@ const config: Config = {
        },
        {
           dark: {
-             ...require('daisyui/src/theming/themes')['[data-theme=dark]'],
+             ...require('daisyui/src/theming/themes')['dark'],
              primary: '#4B6BFB',
              'primary-content': '#FFFFFF',
              'primary-focus': '#405BD5',

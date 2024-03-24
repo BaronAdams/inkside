@@ -13,8 +13,8 @@ const Posts = () => {
 
   return (
     <>
-      <section className='w-screen flex justify-center border-box overflow-x-hidden' > 
-        <div className="w-[96%] flex flex-col md:flex-row gap-5 ">
+      <section className='w-screen pt-10 flex justify-center border-box overflow-x-hidden' > 
+        <div className="w-[95%] flex flex-col md:flex-row gap-5 ">
           <div className="w-full md:w-6/12">
             <Card imageFull className='min-h-[320px] h-[calc(100%)]'>
               <Card.Image src="/images/nature5.webp" alt="Shoes" />
@@ -75,7 +75,7 @@ const Posts = () => {
         </div>  
       </section>
       <section className='py-10 w-screen flex justify-center border-box overflow-x-hidden' > 
-          <div className="w-[96%] gap-4 flex justify-center items-center border-gray-500 border rounded-xl px-6 py-4 flex-wrap ">
+          <div className="w-[95%] gap-4 flex justify-center items-center border-gray-500 border rounded-xl px-6 py-4 flex-wrap ">
             <span className='btn no-animation hover:bg-primary hover:text-primary-content bg-primary/5 border-0 text-primary text-sm px-3 py-2 min-h-fit h-fit rounded-md w-fit capitalize font-medium'>
               #Technology
             </span>
@@ -142,7 +142,7 @@ const Posts = () => {
           </div>
         </section>
       <section className='w-screen flex justify-center border-box overflow-x-hidden'>
-        <div className="w-[96%]">
+        <div className="w-[95%]">
           <div className='flex items-center justify-between mb-8'>
             <h5 className='text-base-content text-2xl font-bold'>Trending Posts</h5>
             <Link href={'/tous-les-articles'} className='btn btn-outline btn-secondary text-secondary-content/60 font-medium text-sm' >Voir tout</Link>
