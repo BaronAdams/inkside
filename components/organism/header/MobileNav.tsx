@@ -1,5 +1,5 @@
+import NavLink from '@/components/NavLink'
 import { headerData } from '@/lib/data/headerData'
-import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 
@@ -30,8 +30,8 @@ const MobileNav = ({ sidebarOpen, setSidebarOpen }: SidebarLayoutProps) => {
    }, [])
 
    return (
-      <nav id='mobile-header' className={!canDisplay ? 'hidden' : 'block' }>
-         <div className="block xl:hidden">
+      <nav id='mobile-header z-40' className={!canDisplay ? 'hidden' : 'block' }>
+         <div className="block z-40 xl:hidden">
             <div
                className={`overflow-y-auto z-40 flex pt-5 top-0 flex-col h-screen w-full max-w-[300px] fixed bg-base-200  duration-500 ease-in  gap-2 md:gap-0 shadow-xl ${
                   sidebarOpen ? 'left-0' : '-left-full'
@@ -89,13 +89,13 @@ const MobileNav = ({ sidebarOpen, setSidebarOpen }: SidebarLayoutProps) => {
                   </div>
                   {/*  menu lists */}
                   {headerData.map((item: any, index: number) => (
-                     <Link
-                        href={item.link}
+                     <NavLink
+                        path={item.link}
                         key={index}
                         className="link link-hover text-base text-base-content/80 hover:text-primary transition hover:duration-300 font-work"
                      >
                         {item.name}
-                     </Link>
+                     </NavLink>
                   ))}
                </div>
             </div>

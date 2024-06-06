@@ -24,13 +24,13 @@ const BannerCard = () => {
                Technology
             </div>
             <h3>
-               <Link
+               <NavLink
                   href="/"
                   className="text-base-content font-semibold text-xl md:text-2xl lg:text-4xl leading-5 md:leading-10 hover:text-primary transition-all hover:duration-500"
                >
                   The Impact of Technology on the Workplace: How Technology is
                   Changing
-               </Link>
+               </NavLink>
             </h3>
             <div className="mt-6 flex items-center gap-5">
                <div className=" flex items-center gap-3">
@@ -40,12 +40,12 @@ const BannerCard = () => {
                      </div>
                   </div>
                   <h6>
-                     <Link
+                     <NavLink
                         href="/"
                         className="text-base-content/60 text-xs md:text-base font-medium hover:text-primary transition hover:duration-300"
                      >
                         Jason Francisco
-                     </Link>
+                     </NavLink>
                   </h6>
                </div>
                <p className="text-base-content/60 text-xs md:text-base">

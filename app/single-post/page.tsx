@@ -1,3 +1,4 @@
+import NavLink from '@/components/NavLink'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -8,16 +9,16 @@ export const metadata = {
 }
 const SinglePost = () => {
    return (
-      <main>
+      <main className='mt-[73.83px]'>
          <section>
             <div className="container mx-auto px-5 md:px-0 font-work">
                <div className="text-sm breadcrumbs py-8">
                   <ul>
                      <li>
-                        <Link href="/" className='text-base-content'>Home</Link>
+                        <NavLink path="/" className='text-base-content'>Home</NavLink>
                      </li>
                      <li className='before:block before:ml-2 before:mr-3 before:content-[""] before:h-3 before:w-3 before:rotate-45 before:bg-transparent before:opacity-[0.4] before:border-t before:border-r '>
-                        <Link href="/category" className='text-base-content'>Technology</Link>
+                        <NavLink path="/category" className='text-base-content'>Technology</NavLink>
                      </li>
                      <li className='text-base-content/60 before:block before:ml-2 before:mr-3 before:content-[""] before:h-3 before:w-3 before:rotate-45 before:bg-transparent before:opacity-[0.4] before:border-t before:border-r '>
                         The Art of Traveling: Tips and Tricks for a Memorable Journey
@@ -44,12 +45,12 @@ const SinglePost = () => {
                                     />
                                  </div>
                               </div>
-                              <a
-                                 href="/"
+                              <NavLink
+                                 path="/"
                                  className=" text-xs md:text-sm font-medium hover:text-primary transition hover:duration-300"
                               >
                                  Jason Francisco
-                              </a>
+                              </NavLink>
                            </div>
                            <p className="text-xs md:text-sm">August 20, 2022</p>
                         </div>
@@ -217,7 +218,7 @@ const SinglePost = () => {
                            <div className="card-body p-0">
                            <div className="flex items-center gap-4 font-work">
                               <figure className="flex-none">
-                                 <Link href="/single-post">
+                                 <NavLink path="/single-post">
                                  <Image
                                     width={110}
                                     height={190}
@@ -225,13 +226,13 @@ const SinglePost = () => {
                                     alt='post image'
                                     src={'/blog2.png'}
                                  />
-                                 </Link>
+                                 </NavLink>
                               </figure>
                               <div>
                                  <h5>
-                                 <Link href="/single-post" className='font-work line-clam-2 font-semibold text-base text-base-content leading-5 hover:text-primary transition hover:duration-300'>
+                                 <NavLink path="/single-post" className='font-work line-clam-2 font-semibold text-base text-base-content leading-5 hover:text-primary transition hover:duration-300'>
                                  The Ultimate Guide to Planning a Trip Abroad
-                                 </Link>
+                                 </NavLink>
                                  </h5>
                                  <p className='mt-2.5 text-base-content/60 text-sm'>Dec 27, 2022</p>
                               </div>
@@ -246,9 +247,9 @@ const SinglePost = () => {
                      <div className="pt-6">
                      {[1,2,3,4,5,6,7].map((item: any)=>(
                      <div className="flex items-center justify-between last:border-none border-b border-base-content border-opacity-10 py-3.5">
-                        <Link href="/category" className='text-base font-medium text-base-content text-opacity-70 capitalize hover:text-primary transition ease-in-out duration-300'>
+                        <NavLink path="/category" className='text-base font-medium text-base-content text-opacity-70 capitalize hover:text-primary transition ease-in-out duration-300'>
                            Technology
-                        </Link>
+                        </NavLink>
                         <span className="px-2 py-1 rounded-md bg-primary bg-opacity-5 text-primary text-xs font-medium">51</span>
                      </div>
                      ))}

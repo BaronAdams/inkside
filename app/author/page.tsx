@@ -16,7 +16,7 @@ const Author = () => {
          </section>
 
          {/* Latest Post */}
-         <section>
+         <section className='mt-[73.83px]'>
             <div className="container mx-auto mt-12 mb-24 px-5 sm:px-0">
                <h3 className="text-base-content font-bold text-2xl mb-8">
                   Latest Post

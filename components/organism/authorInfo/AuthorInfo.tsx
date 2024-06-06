@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
+import NavLink from '@/components/NavLink'
 
 /**
  * Our AuthorInfo is a reusable UI component that can be used to represent user details information.
@@ -42,14 +43,14 @@ const AuthorInfo = () => {
          </p>
          <div className="flex items-center justify-center gap-2">
             {socialShare?.map((item, index) => (
-               <Link
-                  href={item?.link}
+               <NavLink
+                  path={item?.link}
                   target="_blank"
                   key={index}
                   className="bg-secondary text-secondary-content hover:text-primary-content w-8 h-8 flex justify-center items-center rounded-md hover:bg-primary transition duration-300 ease-in-out"
                >
                   {item?.icon()}
-               </Link>
+               </NavLink>
             ))}
          </div>
       </div>

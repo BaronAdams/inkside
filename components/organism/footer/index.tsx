@@ -1,10 +1,11 @@
 "use client"
 import { FooterDataOne, FooterDataTwo } from '@/lib/data/footerData'
-import Link from 'next/link'
 import React from 'react'
 import NewsLetter from '@/components/molecules/newsletter/NewsLetter'
 import useMode from '@/lib/utils/themeMode'
 import { Favicon } from '@/components/organism/header'
+import NavLink from '@/components/NavLink'
+import { usePathname } from 'next/navigation'
 
 /**
  * Our Footer is a reusable UI component that used to represent bottom section of any website.
@@ -16,11 +17,14 @@ import { Favicon } from '@/components/organism/header'
 
 const Footer = () => {
    const { lightMode } = useMode()
+   const pathname = usePathname()
 
+   const isAuthPage  = pathname.startsWith('/login') || pathname.startsWith('/register') || pathname.startsWith('/write')
+   
    return (
-      <footer id='footer' className={`bg-base-200 px-5 md:px-0 font-sans`}>
+      <footer id='footer' className={`bg-base-200 z-10 overflow-x-hidden px-5 md:px-0 font-sans ${isAuthPage ? 'hidden h-0' : 'block'} `}>
          <div className="container mx-auto">
-            <div className="grid grid-cols-12 gap-5 py-16">
+            <div className={`grid grid-cols-12 gap-5 ${isAuthPage ? 'py-0' : 'py-16'} `}>
                <div className="col-span-12 lg:col-span-3">
                   <h5 className="text-lg font-semibold text-base-content font-sans">
                      About
@@ -61,12 +65,12 @@ const Footer = () => {
                      <div className="flex flex-col gap-y-2 mt-6">
                         {FooterDataOne.map((item: any, index: number) => (
                            <div key={index}>
-                              <Link
-                                 href={item.link}
+                              <NavLink
+                                 path={item.link}
                                  className="link link-hover text-base text-base-content/70 hover:text-primary transition hover:duration-300"
                               >
                                  {item.name}
-                              </Link>
+                              </NavLink>
                            </div>
                         ))}
                      </div>
@@ -78,12 +82,12 @@ const Footer = () => {
                      <div className="flex flex-col gap-y-2 mt-6">
                         {FooterDataTwo.map((item: any, index: number) => (
                            <div key={index}>
-                              <Link
-                                 href={item.link}
+                              <NavLink
+                                 path={item.link}
                                  className="link link-hover text-base text-base-content/70 hover:text-primary transition hover:duration-300"
                               >
                                  {item.name}
-                              </Link>
+                              </NavLink>
                            </div>
                         ))}
                      </div>
@@ -95,9 +99,9 @@ const Footer = () => {
             </div>
             <div className="flex flex-col gap-4 md:gap-0 md:flex-row items-center justify-between py-8 bg-base-200 border-t border-base-content/10">
                <div className="flex items-center gap-2.5">
-                  <Link href="/">
+                  <NavLink path="/">
                      <Favicon className={`text-base-content`} />
-                  </Link>
+                  </NavLink>
                   <div>
                      <h4 className="text-xl text-base-content font-sans">
                         Meta<strong>Blog</strong>
@@ -108,24 +112,24 @@ const Footer = () => {
                   </div>
                </div>
                <div className="flex items-center gap-4 text-base-content/70">
-                  <Link
-                     href="/"
+                  <NavLink
+                     path="/"
                      className="text-base border-r border-base-content/10 pr-4 hover:text-primary transition hover:duration-300"
                   >
                      Terms of Use
-                  </Link>
-                  <Link
-                     href="/"
+                  </NavLink>
+                  <NavLink
+                     path="/"
                      className="text-base border-r border-base-content/10 pr-4  hover:text-primary transition hover:duration-300"
                   >
                      Privacy Policy
-                  </Link>
-                  <Link
-                     href="/"
+                  </NavLink>
+                  <NavLink
+                     path="/"
                      className="text-base hover:text-primary transition hover:duration-300"
                   >
                      Cookie Policy
-                  </Link>
+                  </NavLink>
                </div>
             </div>
          </div>

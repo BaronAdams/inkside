@@ -11,7 +11,7 @@ export const metadata = {
 
 const BlogListing = () => {
    return (
-      <main>
+      <main className='mt-[73.83px]'>
          <div className="container mx-auto">
             {/* Page title info */}
             <section>

@@ -21,10 +21,16 @@
      font-size: 1rem;
      /* background-color: #ea5a0c */
   }
+
+  header{
+    background-color: var(--fallback-b1,oklch(var(--b1)));
+    width: 100vw;
+  }
 }
 
 .card.image-full > .card-body{
   @apply absolute;
+  /* background-color: rgba(58, 58, 58, 0.5); */
 }
 .card.image-full:before {
   @apply absolute inset-0 bg-gradient-to-t from-black/50 to-transparent rounded-xl ;

@@ -1,6 +1,5 @@
-import Link from 'next/link'
+import NavLink from '@/components/NavLink'
 import React from 'react'
-
 /**
  * Our PageInfo is a reusable UI component that used to represent pge title and breadcrumbs section.
  *
@@ -18,12 +17,12 @@ const PageInfo = () => {
          <div className="text-base breadcrumbs text-base-content/80 font-work mt-2 flex items-center justify-center">
             <ul>
                <li>
-                  <Link
-                     href={`/`}
+                  <NavLink
+                     path={`/`}
                      className="hover:text-primary transition hover:duration-300 font-medium text-base"
                   >
                      Home
-                  </Link>
+                  </NavLink>
                </li>
                <li>
                   <span className="text-base-content/60 font-normal text-base">

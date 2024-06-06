@@ -1,0 +1,13 @@
+.swiper-button-next, .swiper-button-prev{
+    @apply hidden;
+}
+.next{
+    @apply min-h-screen overflow-y-scroll;
+    /* @layer max-w-[547px]:h-full; */
+}
+
+/* @media (max-width:547px) {
+    .next{
+        @apply min-h-full;
+    }
+} */

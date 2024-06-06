@@ -1,3 +1,4 @@
+import NavLink from '@/components/NavLink'
 import React from 'react'
 
 /**
@@ -26,13 +27,13 @@ const PostOverlayCard = () => {
                Technology
             </div>
             <h3>
-               <a
-                  href="/"
+               <NavLink
+                  path="/"
                   className="text-neutral-content font-semibold text-xl md:text-2xl lg:text-4xl leading-5 md:leading-10 hover:text-primary transition hover:duration-500"
                >
                   The Impact of Technology on the Workplace: How Technology is
                   Changing
-               </a>
+               </NavLink>
             </h3>
             <div className="mt-3 md:mt-6 flex items-center gap-5 text-neutral-content">
                <div className=" flex items-center gap-3">
@@ -42,12 +43,12 @@ const PostOverlayCard = () => {
                      </div>
                   </div>
                   <h5>
-                     <a
-                        href="/"
+                     <NavLink
+                        path="/"
                         className="text-xs md:text-base font-medium hover:text-primary transition hover:duration-300"
                      >
                         Jason Francisco
-                     </a>
+                     </NavLink>
                   </h5>
                </div>
                <p className=" text-xs md:text-base">August 20, 2022</p>

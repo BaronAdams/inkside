@@ -8,7 +8,8 @@ export interface IUser extends mongoose.Document{
     email: string;
     profileImg?: string;
     followers: mongoose.Types.ObjectId[];
-    following: mongoose.Types.ObjectId[];
+    followingUsers: mongoose.Types.ObjectId[];
+    followingCategories: mongoose.Types.ObjectId[];
 }
 
 const userSchema = new mongoose.Schema<IUser>({
@@ -35,9 +36,13 @@ const userSchema = new mongoose.Schema<IUser>({
         type: mongoose.Schema.Types.ObjectId ,
         ref:'User'
     }],
-    following:[{
+    followingUsers:[{
         type: mongoose.Schema.Types.ObjectId ,
         ref:'User'
+    }],
+    followingCategories:[{
+        type: String,
+        // required:true
     }],
 }, { timestamps: true })
 
@@ -75,31 +80,59 @@ export const Comment = mongoose.models?.Comment || mongoose.model<IComment>('Com
 
 export interface IPost extends mongoose.Document{
     title: string;
+    isDraft: boolean;
     content: string;
     categories: string[];
-    authorId: mongoose.Types.ObjectId;
+    author: mongoose.Types.ObjectId;
     views: number;
     likes: mongoose.Types.ObjectId[];
+    coverPic: string;
     // comments: string[];
     shares: mongoose.Types.ObjectId[];
 }
 
+//@ts-ignore
 const postSchema = new mongoose.Schema<IPost>({
     title:{
         type: String,
-        required:true
+        required: function(){
+            return !this.isDraft;
+        }
+    },
+    isDraft:{
+        type: Boolean,
+        default: true
     },
     content:{
         type: String,
-        required:true
+        required: function(){
+            return !this.isDraft;
+        }
     },
-    categories:[{
-        type: String,
-        required:true
-    }],
+    categories:{
+        type: [{
+            type: String,
+            required: function(){
+                return !this.isDraft;
+            }
+        }],
+        validate:{
+            validator: function(this:IPost, categories: string[]){
+                return categories.length > 0 || this.isDraft;
+            }
+        }
+    },
     views:{
         type: Number,
         default: 0
+    },
+    author:{
+        type: mongoose.Schema.Types.ObjectId ,
+        ref:'User'
+    },
+    coverPic:{
+        type: String,
+        default:'/images/blog1.png'
     },
     likes:[{
         type: mongoose.Schema.Types.ObjectId ,
@@ -115,6 +148,17 @@ const postSchema = new mongoose.Schema<IPost>({
     }],
 }, { timestamps: true })
 
-export const Post = mongoose.models?.Post || mongoose.model<IPost>('Post', postSchema)
+export const Post = mongoose.models?.Post || mongoose.model<IPost>('Post', postSchema) 
 
+// export interface ICategory extends mongoose.Document{
+//     name: string;
+// }
 
+// const categorySchema = new mongoose.Schema<ICategory>({
+//     name:{
+//         type: String,
+//         required: true
+//     }
+// }, { timestamps: true })
+
+// export const Category = mongoose.models?.Category || mongoose.model<ICategory>('Category', categorySchema) 

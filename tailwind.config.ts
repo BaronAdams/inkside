@@ -79,41 +79,42 @@ const config: Config = {
              success: '#009485',
              warning: '#ff9900',
              error: '#ff5724',
+             ".ql-toolbar.ql-snow": {
+               "background-color":"oklch(0.897346 0.002928 264.541032 /1)"
+             },
+             ".select__value-container.select__value-container--is-multi.css-1fdsijx-ValueContainer": {
+               "background-color":"#181a2a"
+             },
+             ".select__indicators.css-1hb7zxy-IndicatorsContainer": {
+               "background-color":"#181a2a"
+             },
+             ".select__menu.css-1nmdiq5-menu": {
+               "background-color":"#181a2a"
+             },
+             ".select__menu.css-1nmdiq5-menu>*>*:hover": {
+               "background-color":"rgba(58, 58, 58, 0.5)"
+             },
+             ".select__menu.css-1nmdiq5-menu>*>*": {
+               "background-color":"#181a2a"
+             },
+             ".select__multi-value__remove.css-12a83d4-MultiValueRemove > svg": {
+               "color":"black"
+             },
+            //  ".select__menu.css-1nmdiq5-menu>*>*": {
+            //    "background-color":"#181a2a"
+            //  },
+             ".select__value-container.select__value-container--is-multi.select__value-container--has-value.css-3w2yfm-ValueContainer": {
+               "background-color":"#181a2a"
+             },
           },
-       },
-       'bumblebee',
-       'emerald',
-       'corporate',
-       'synthwave',
-       'retro',
-       'cyberpunk',
-       'valentine',
-       'halloween',
-       'garden',
-       'forest',
-       'aqua',
-       'lofi',
-       'pastel',
-       'fantasy',
-       'wireframe',
-       'black',
-       'luxury',
-       'dracula',
-       'cmyk',
-       'autumn',
-       'business',
-       'acid',
-       'lemonade',
-       'night',
-       'coffee',
-       'winter',
+       }
     ],
     base: true,
     utils: true,
     logs: false,
     rtl: false,
     prefix: '',
-    darkTheme: 'light',
+    darkTheme:  ["class", '[data-theme="dark"]'],
  },
 }
 export default config

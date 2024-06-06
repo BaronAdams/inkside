@@ -1,4 +1,4 @@
-import NextAuth, { Session } from 'next-auth';
+import NextAuth from 'next-auth';
 import Credentials from 'next-auth/providers/credentials';
 import { authConfig } from './config/auth.config';
 import { z } from 'zod';
@@ -13,17 +13,19 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
       async authorize(credentials) {
         const parsedCredentials = z
           .object({ email: z.string().email(), password: z.string().min(6) })
-          .safeParse(credentials);
+          .safeParse({ email: credentials.email, password: credentials.password });
  
         if (parsedCredentials.success) {
+          console.log('Credentials are successfully parsed')
           const { email, password } = parsedCredentials.data;
+          console.log(`email : ${email} ; password: ${password} `)
 
           const user = await User.findOne({email:email});
-
-          if (!user?._id) return null;
+          if (!user?._id) throw Error("Utilisateur inconnu") ;
 
           const passwordsMatch = await bcrypt.compare(password, user.password);
-          if (passwordsMatch) return user;
+          if (!passwordsMatch) throw Error("Mot de passe incorrect") ;
+          return user;
         }
         console.log('Invalid credentials');
         return null;
@@ -31,17 +33,21 @@ export const { auth, signIn, signOut, handlers } = NextAuth({
     }),
   ],
   callbacks:{
+    //@ts-ignore
     async session({ session }) {
       const sessionUser = await User.findOne({email: session?.user?.email})
-      
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          id: sessionUser?._id,
-          image: sessionUser?.profileImg,
-        },
+
+      if(sessionUser?._id){
+        return {
+          ...session,
+          user: {
+            ...session.user,
+            id: sessionUser?._id,
+            username: sessionUser?.username,
+            image: sessionUser?.profileImg
+          }
+        }
       }
-    }
+    }      
   }
 });
