@@ -2,7 +2,9 @@ import React from 'react'
 
 const Username = () => {
   return (
-    <div>Username</div>
+    <div className='mt-[73.83px]'>
+      Username
+    </div>
   )
 }
 

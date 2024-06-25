@@ -12,3 +12,5 @@ console.log(`${title}-${id}`)
 // CATEGORIES
 // DISCUSSIONS
 // POSTS
+    // "dev": "next dev",
+    // "start": "next start",

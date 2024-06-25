@@ -21,7 +21,7 @@ import { IoMdNotificationsOutline } from 'react-icons/io'
  *
  * @returns React component that can be easily integrated into any web application.
  */
-const Header = ( { session } : {session : Session | null } ) => {
+const Header = ( { session } : { session : Session | null } ) => {
    // const { theme, setTheme, themes, hydrationError } = useMode()
 
    const [sidebarOpen, setSidebarOpen] = useState<boolean>(false)
@@ -40,13 +40,13 @@ const Header = ( { session } : {session : Session | null } ) => {
    return (
       <header className={`shadow-2xl fixed z-20 max-w-[100vw]  ${isAuthPage ? 'hidden h-0' : 'block'} `}>
          <div className="container mx-auto font-work">
-            <div className="navbar z-20 max-h-[73.83px] p-0 grid grid-cols-12">
-               <div className="col-span-2 max-[490px]:col-span-4 max-[400px]:col-span-6">
+            <div className="navbar z-20 max-h-[73.83px] p-0 flex justify-between">
+               <div>
                   <Link href={`/`} >
                      <img src="/inkside.svg" alt="Logo" className='object-cover mt-5 scale-[1.2] h-[8vh] w-[170px] ' />
                   </Link>
                </div>
-               <nav className="hidden xl:block col-span-6">
+               {/* <nav className="hidden xl:block col-span-6">
                   <div className=" w-full flex items-center justify-center gap-10">
                      {headerData.map((item: any, index: number) => (
                         <div key={index}>
@@ -59,8 +59,8 @@ const Header = ( { session } : {session : Session | null } ) => {
                         </div>
                      ))}
                   </div>
-               </nav>
-               <div className="flex items-center justify-end z-30 gap-10 max-sm:gap-4 col-span-9 xl:col-span-4 max-[490px]:col-span-8 max-[400px]:col-span-6">
+               </nav> */}
+               <div className="flex items-center justify-end z-30 gap-10 max-sm:gap-4">
                   {/* Search Block */}
                   <div className="bg-base-200 pl-4 pr-3 py-2 rounded-md hidden sm:flex items-center gap-4">
                      <input
@@ -108,8 +108,17 @@ const Header = ( { session } : {session : Session | null } ) => {
                                     <li role="menuitem"><button onClick={() => logOut()}>Deconnexion</button></li>
                                  </ul>
                               </div>
-                              <div>
-                                 <IoMdNotificationsOutline size={35} />
+                              <div className="dropdown z-30" role='listbox'>
+                                 <div className="group w-10 h-10 relative flex hover:cursor-pointer" tabIndex={0}>
+                                    <IoMdNotificationsOutline size={38} className='justify-self-center self-center' />
+                                    <div className="absolute left-[58%] top-[12%] w-[10px] h-[10px] bg-red-400 rounded-full"></div>
+                                 </div>
+                                 <ul tabIndex={0} className='dropdown-content z-30 menu p-2 shadow bg-base-100 rounded-box w-[370px] mr-[200px]' role='menu'>
+                                    <li role="menuitem"><Link href={'/profile'}>Mon Profil kzf zkefgjk ekge geg ef</Link></li>
+                                    <li role="menuitem"><Link href={'/settings'}>Paramètres</Link></li>
+                                    <li role="menuitem"><Link href={'/write'}>Ecrivez un article</Link></li>
+                                    <li role="menuitem"><button onClick={() => logOut()}>Deconnexion</button></li>
+                                 </ul>
                               </div>
                            </div>
                         ) 
@@ -122,6 +131,7 @@ const Header = ( { session } : {session : Session | null } ) => {
                         </div>) 
                      }
                   </div>   
+                  
                   {/* Theme Switcher #ea5a0c8f*/}
                   <div>
                      <label className="swap swap-rotate" >

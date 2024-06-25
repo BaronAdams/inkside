@@ -7,6 +7,7 @@ import { auth } from '@/lib/auth'
 import Image from 'next/image'
 import Link from 'next/link'
 
+
 export const metadata: Metadata = {
   title: "Inkside | Page d'accueil",
   description: 'Soyez curieux, restez informés, écrivez et partagez vos pensées sur Inkside ',

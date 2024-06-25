@@ -72,7 +72,7 @@ const commentSchema = new mongoose.Schema<IComment>({
     }],
     replies:[{
         type: mongoose.Schema.Types.ObjectId ,
-        ref:'User'
+        ref:'Comment'
     }],
 }, { timestamps: true })
 
@@ -87,7 +87,7 @@ export interface IPost extends mongoose.Document{
     views: number;
     likes: mongoose.Types.ObjectId[];
     coverPic: string;
-    // comments: string[];
+    comments: IComment[];
     shares: mongoose.Types.ObjectId[];
 }
 
@@ -138,10 +138,10 @@ const postSchema = new mongoose.Schema<IPost>({
         type: mongoose.Schema.Types.ObjectId ,
         ref:'User'
     }],
-    // comments:[{
-        //     type: Schema.Types.ObjectId ,
-        //     ref:'Coment'
-        // }],
+    comments:[{
+            type: mongoose.Schema.Types.ObjectId ,
+            ref:'Coment'
+    }],
     shares:[{
         type: mongoose.Schema.Types.ObjectId ,
         ref:'User'
